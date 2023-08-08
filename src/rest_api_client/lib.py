@@ -195,13 +195,19 @@ class RestAPI:
 
     def _process_endpoint_response(self, call: PreparedCall, response):
         logger.debug(response.content)
+        logger.debug(response)
+        logger.debug(call)
         response.raise_for_status()
         try:
             json_response = response.json()
             if call.model:
+                logger.debug("model")
                 return call.model(**json_response)
+            logger.debug("no model")
             return json_response
-        except Exception:
+        except Exception as e:
+            logger.debug(e)
+            logger.debug(response)
             return response.text
 
     def _create_methods(self, endpoint: Endpoint):
