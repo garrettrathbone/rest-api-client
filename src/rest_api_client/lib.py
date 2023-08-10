@@ -10,7 +10,7 @@ import httpx_auth  # type: ignore
 
 
 logger = logging.getLogger("LIB_LOGGER")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.ERROR)
 
 JSON_MIMETYPE = "application/json"
 SUPPORTED_METHODS = {"get", "post", "put", "patch", "delete"}
