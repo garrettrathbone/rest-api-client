@@ -210,6 +210,7 @@ class RestAPI:
         parameters = []
         if endpoint.method in [HTTPMethod.POST, HTTPMethod.PUT, HTTPMethod.PATCH]:
             parameters.append("data: BaseModel = None")
+            parameters.append("files: BaseModel = None")
 
         if endpoint.path_parameters:
             for p in endpoint.path_parameters:
