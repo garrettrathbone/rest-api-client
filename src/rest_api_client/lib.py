@@ -122,18 +122,18 @@ class RestAPI:
             self._create_methods(endpoint)
 
     def call_endpoint(
-        self, endpoint_name, *args, data: Optional[BaseModel] = None, **kwargs
+        self, endpoint_name, *args, data: Optional[BaseModel] = None, files: Optional[BaseModel] = None, **kwargs
     ):
         call: PreparedCall = self._prepare_call(
-            endpoint_name, data, **kwargs, mode=ExecutionMode.SYNC
+            endpoint_name, data, files, **kwargs, mode=ExecutionMode.SYNC
         )
         return self._call_sync_endpoint(call)
 
     async def call_async_endpoint(
-        self, endpoint_name, *args, data: Optional[BaseModel] = None, **kwargs
+        self, endpoint_name, *args, data: Optional[BaseModel] = None, files: Optional[BaseModel] = None, **kwargs
     ):
         call: PreparedCall = self._prepare_call(
-            endpoint_name, data, **kwargs, mode=ExecutionMode.ASYNC
+            endpoint_name, data, files, **kwargs, mode=ExecutionMode.ASYNC
         )
         return await self._call_async_endpoint(call)
 
@@ -141,6 +141,7 @@ class RestAPI:
         self,
         name: str,
         data: Optional[BaseModel] = None,
+        files: Optional[BaseModel] = None,
         mode=ExecutionMode.SYNC,
         **kwargs,
     ) -> PreparedCall:
@@ -163,6 +164,8 @@ class RestAPI:
         if data:
             driver_kwargs["json"] = data
             headers["Content-Type"] = JSON_MIMETYPE
+        if files:
+            driver_kwargs["files"] = files
 
         driver_kwargs["headers"] = headers  # type: ignore
         if endpoint.query_parameters:
