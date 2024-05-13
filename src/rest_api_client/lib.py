@@ -252,7 +252,7 @@ class RestAPI:
         return _query_parameters
 
 
-class BearerHeaderToken(httpx.Auth, httpx_auth.authentication.SupportMultiAuth):
+class BearerHeaderToken(httpx.Auth, httpx_auth._authentication.SupportMultiAuth):
     """Describes a bearer token used in the header requests authentication."""
 
     def __init__(self, bearer_token: str):
